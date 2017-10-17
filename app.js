@@ -6,6 +6,19 @@ const concat = require('concat-stream')
 const app = express()
 const db = levelup(leveldown('./db'))
 
+const port = process.env.PORT || 3000
+const host = process.env.HOST || 'localhost'
+
+app.get('/kill', async (req, res) => {
+  process.exit(1)
+})
+
+app.get('/list', async (req, res) => {
+  db.createKeyStream().on('data', key => {
+    res.write(key + '\n')
+  })
+})
+
 app.get('/:name', async (req, res) => {
   try {
     const packet = JSON.parse((await db.get(req.params.name)))
@@ -32,7 +45,7 @@ app.put('/:name', (req, res) => {
   })
 })
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+app.listen(port, () => {
+  console.log(`Listening on http://${host}:${port}`)
 })
 

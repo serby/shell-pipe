@@ -6,15 +6,19 @@
   "dependencies": {
     "concat-stream": "^1.6.0",
     "express": "^4.16.2",
+    "foreman": "^2.0.0",
     "hat": "^0.0.3",
     "level": "^1.7.0",
     "leveldown": "^2.0.0",
     "levelup": "^2.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "lev": "^3.3.1"
+  },
   "scripts": {
+    "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Paul Serby",
   "license": "ISC"
 }
