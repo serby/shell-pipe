@@ -23,6 +23,7 @@ app.get('/:name', async (req, res) => {
   try {
     const packet = JSON.parse((await db.get(req.params.name)))
     console.log(packet)
+    res.type('text/plain')
     res.send(packet.data)
   } catch (e) {
     res.status(500).send(e.message)
@@ -32,7 +33,7 @@ app.get('/:name', async (req, res) => {
 app.put('/:name', (req, res) => {
   const id = hat()
   const name = req.params.name
-  const key = name + '!' + id
+  const key = name + '-' + id
   const stream = concat(async data => {
     try {
       const packet = { id, name, data: data.toString() }
@@ -43,7 +44,8 @@ app.put('/:name', (req, res) => {
     }
   })
   req.pipe(stream).on('finish', () => {
-    res.send(key)
+    const url = req.protocol + '://' + req.get('host') + req.originalUrl + '-' + id
+    res.send(url + '\n')
   })
 })
 
