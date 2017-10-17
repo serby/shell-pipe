@@ -16,7 +16,7 @@ app.get('/kill', async (req, res) => {
 app.get('/list', async (req, res) => {
   db.createKeyStream().on('data', key => {
     res.write(key + '\n')
-  })
+  }).on('end', () => res.end())
 })
 
 app.get('/:name', async (req, res) => {
@@ -31,17 +31,19 @@ app.get('/:name', async (req, res) => {
 
 app.put('/:name', (req, res) => {
   const id = hat()
+  const name = req.params.name
+  const key = name + '!' + id
   const stream = concat(async data => {
     try {
-      const packet = { id, name: req.params.name, data: data.toString() }
-      await db.put(id, JSON.stringify(packet))
+      const packet = { id, name, data: data.toString() }
+      await db.put(key, JSON.stringify(packet))
       console.log('written', packet)
     } catch (e) {
       console.error('Something bad happened', e)
     }
   })
   req.pipe(stream).on('finish', () => {
-    res.send(id)
+    res.send(key)
   })
 })
 
