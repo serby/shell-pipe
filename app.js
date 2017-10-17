@@ -49,7 +49,7 @@ app.put('/:name', (req, res) => {
   })
 })
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on http://${host}:${port}`)
 })
 
