@@ -1,0 +1,20 @@
+{
+  "name": "shell-pipe",
+  "version": "1.0.0",
+  "description": "Pipe from the shell to a web bin",
+  "main": "app.js",
+  "dependencies": {
+    "concat-stream": "^1.6.0",
+    "express": "^4.16.2",
+    "hat": "^0.0.3",
+    "level": "^1.7.0",
+    "leveldown": "^2.0.0",
+    "levelup": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
